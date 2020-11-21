@@ -1,0 +1,37 @@
+version: "3"
+services: 
+    attendance: 
+        container_name: attendance
+        build: ./
+        ports:
+            - "5002:5002"
+        volumes:
+            - ./:/usr/src/
+        restart: always
+        tty: true
+        networks: 
+            docker_attendance_network:
+                ipv4_address: 172.23.0.3
+
+    mongo:
+        image: mongo:4.2.9
+        restart: always
+        volumes: 
+            #- ./image/mongodb/data:/data/db
+            - /var/lib/mongo-attendance:/data/db
+        ports: 
+            - "27018:27017"
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: sferis1410
+        networks: 
+            docker_attendance_network:
+                ipv4_address: 172.23.0.2
+
+
+networks: 
+    docker_attendance_network:    
+        driver: bridge
+        ipam: 
+            config: 
+               - subnet: 172.23.0.0/16

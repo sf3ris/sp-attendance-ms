@@ -1,0 +1,8 @@
+flask
+python-dotenv
+Flask-Injector
+injector
+pytest
+mongoengine
+flask-cors
+requests
