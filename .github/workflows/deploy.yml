@@ -51,6 +51,7 @@ jobs:
           script: |
             cd /usr/src/attendance_microservice 2> /dev/null && { docker-compose down; cd /usr/src/; };
             rm -rf attendance_microservice.old 2> /dev/null; 
-            mv attendance_microservice attendance_microservice.old && mv ms_attendance attendance_microservice; 
+            mv attendance_microservice attendance_microservice.old 2> /dev/null;
+            mv ms_attendance attendance_microservice; 
             cd attendance_microservice; 
             docker-compose up -d --build --force-recreate;
