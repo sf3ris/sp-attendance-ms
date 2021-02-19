@@ -26,9 +26,9 @@ jobs:
       - name: Build project
         run: pip install --no-cache-dir -r requirements.txt
       - name: Setup Environment
-        run: 
-          - mv app/.env.example app/.env
-          - sed -i "s/:AUTH_SERVICE_HOST/${{ secrets.AUTH_HOST}}/g" app/.env
-          - sed -i "s/:HOST/172.21.0.2/g" app/.env
-          - sed -i "s/:USER/root/g" app/.env
-          - sed -i "s/:PASSWORD/${{ secrets.DB_PASS}}/g" app/.env
+        run: |
+          mv app/.env.example app/.env
+          sed -i "s/:AUTH_SERVICE_HOST/${{ secrets.AUTH_HOST}}/g" app/.env
+          sed -i "s/:HOST/172.21.0.2/g" app/.env
+          sed -i "s/:USER/root/g" app/.env
+          sed -i "s/:PASSWORD/${{ secrets.DB_PASS}}/g" app/.env
