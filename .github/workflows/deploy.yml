@@ -1,0 +1,34 @@
+name: Deploy to Digital Ocean 
+
+on:
+  release:
+    types: [ created ]
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  deploy:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          # Semantic version range syntax or exact version of a Python version
+          python-version: '3.x'
+          # Optional - x64 or x86 architecture, defaults to x64
+          architecture: 'x64'
+      # You can test your matrix by printing the current Python version
+      - name: Build project
+        run: pip install --no-cache-dir -r requirements.txt
+      - name: Setup Environment
+        run: 
+          - mv app/.env.example app/.env
+          - sed -i "s/:AUTH_SERVICE_HOST/${{ secrets.AUTH_HOST}}/g" app/.env
+          - sed -i "s/:HOST/172.21.0.2/g" app/.env
+          - sed -i "s/:USER/root/g" app/.env
+          - sed -i "s/:PASSWORD/${{ secrets.DB_PASS}}/g" app/.env
